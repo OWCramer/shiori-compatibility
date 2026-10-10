@@ -1,0 +1,27 @@
+name: Validate
+on: [push, pull_request]
+jobs:
+  schema:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install jsonschema==4.23.0
+      - name: Check every engine file against schema.json, with unique app ids
+        run: |
+          python - <<'PY'
+          import glob, json, sys
+          from jsonschema import validate
+          schema = json.load(open("schema.json"))
+          seen, failed = {}, False
+          for path in sorted(glob.glob("engines/*.json")):
+              data = json.load(open(path))
+              validate(data, schema)
+              for game in data["games"]:
+                  if game["appID"] in seen:
+                      print(f"{path}: {game['appID']} is also in {seen[game['appID']]}"); failed = True
+                  seen[game["appID"]] = path
+          sys.exit(1 if failed else 0)
+          PY
