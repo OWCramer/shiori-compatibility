@@ -17,6 +17,14 @@
       "tested": "2026-10-07",
       "source": "shiori",
       "notes": "Title to ending headless, including its timed choices."
+    },
+    {
+      "appID": 2399220,
+      "name": "NUKITASHI",
+      "status": "plays",
+      "tested": "2026-10-10",
+      "source": "shiori",
+      "notes": "Needs the official R18 patch (the Steam build alone is a cut-down trial), imported from the game page. Title, prologue, choices, save and load, headless and in the simulator; CONFIG, backlog and H-scene autoplay not checked yet."
     }
   ]
 }
