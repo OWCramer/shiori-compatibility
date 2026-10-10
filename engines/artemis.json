@@ -24,7 +24,7 @@
       "status": "plays",
       "tested": "2026-10-10",
       "source": "shiori",
-      "notes": "Needs the official R18 patch (the Steam build alone is a cut-down trial), imported from the game page. Title, prologue, choices, save and load, headless and in the simulator; CONFIG, backlog and H-scene autoplay not checked yet."
+      "notes": "The Steam build plays its all-ages story to the ending movie. The official R18 patch, imported from the game page, adds the full game (title, prologue, choices, save and load checked). Headless and in the simulator; CONFIG, backlog and H-scene autoplay not checked yet."
     }
   ]
 }
