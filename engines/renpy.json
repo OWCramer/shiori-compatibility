@@ -43,6 +43,14 @@
       "tested": "2026-10-08",
       "source": "shiori",
       "notes": "7.8.7 runtime; holds about 0.9 GB over long sessions after the texture-leak fix."
+    },
+    {
+      "appID": 488660,
+      "name": "Just Deserts",
+      "status": "boots",
+      "tested": "2026-10-10",
+      "source": "shiori",
+      "notes": "Ren'Py 8.0.3, run on Shiori's bundled 8.1.3 engine (8.0 games' own engine code doesn't match the 8.1.3 runtime). Reaches its title; Steam Cloud saves download but don't upload."
     }
   ]
 }

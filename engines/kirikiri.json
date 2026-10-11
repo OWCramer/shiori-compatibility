@@ -119,6 +119,15 @@
       "status": "unsupported",
       "source": "shiori",
       "notes": "Hx encryption; no keys."
+    },
+    {
+      "appID": 368160,
+      "name": "WORLD END ECONOMiCA episode.02",
+      "status": "boots",
+      "tested": "2026-10-10",
+      "source": "shiori",
+      "branch": "revert",
+      "notes": "The default build is the Unity HD remaster (unsupported); the revert beta is the KiriKiri original. Reaches its title; its menu-bar and yes/no dialogs work since Shiori's engine patches 0028–0029."
     }
   ]
 }
