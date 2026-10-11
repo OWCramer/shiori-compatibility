@@ -70,6 +70,10 @@
             "type": "string",
             "description": "Steam beta branch to use instead of the default build"
           },
+          "garbro": {
+            "type": "string",
+            "description": "KiriKiri: the game's title in GARbro's database (crskycode/GARbro), for archives encrypted with CxDec"
+          },
           "profile": {
             "type": "string",
             "description": "Luca System: the screen profile Shiori uses"

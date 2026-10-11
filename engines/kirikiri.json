@@ -52,6 +52,7 @@
     {
       "appID": 487430,
       "name": "KARAKARA",
+      "garbro": "KARAKARA 2",
       "status": "boots",
       "tested": "2026-10-08",
       "source": "shiori",
@@ -60,6 +61,7 @@
     {
       "appID": 745850,
       "name": "KARAKARA2",
+      "garbro": "KARAKARA 2",
       "status": "plays",
       "tested": "2026-10-08",
       "source": "shiori",
@@ -68,6 +70,7 @@
     {
       "appID": 555640,
       "name": "Japanese School Life",
+      "garbro": "Japanese School Life",
       "status": "plays",
       "tested": "2026-10-08",
       "source": "shiori",
@@ -76,6 +79,7 @@
     {
       "appID": 1094930,
       "name": "Ninja Girl and the Mysterious Army of Urban Legend Monsters!",
+      "garbro": "KARAKARA 2",
       "status": "plays",
       "tested": "2026-10-08",
       "source": "shiori",
@@ -84,6 +88,7 @@
     {
       "appID": 1637370,
       "name": "Letters From a Rainy Day -Oceans and Lace-",
+      "garbro": "Tsuyuchiru Letter ~Umi to Shiori ni Amaoto o~",
       "status": "plays",
       "tested": "2026-10-08",
       "source": "shiori",
