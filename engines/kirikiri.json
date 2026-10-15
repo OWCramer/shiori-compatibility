@@ -1,6 +1,6 @@
 {
   "engine": "kirikiri",
-  "name": "KiriKiri Z (AetherKrkr)",
+  "name": "KiriKiri Z (KiriKiriKit)",
   "games": [
     {
       "appID": 385800,
@@ -122,10 +122,10 @@
       "appID": 1829980,
       "name": "Café Stella and the Reaper's Butterflies",
       "garbro": "Café Stella to Shinigami no Chou [Steam]",
-      "status": "unsupported",
+      "status": "boots",
       "tested": "2026-10-13",
       "source": "shiori",
-      "notes": "Hx encryption. GARbro has its keys, but not its file names (the archives keep only their hashes); it plays once GARbro publishes a names list for it."
+      "notes": "Hx encryption, keys from GARbro. Reaches its title and the first scene with text and voices on Shiori (Beta). The title's animated background and the first scene's butterfly movie don't show yet."
     },
     {
       "appID": 1144400,
