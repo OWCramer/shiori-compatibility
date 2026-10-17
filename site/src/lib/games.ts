@@ -47,6 +47,7 @@ export const engineRepos: Record<string, string> = {
 };
 
 export const repo = "https://github.com/OWCramer/shiori-compatibility";
+export const appPage = "https://ocramer.com/apps/shiori";
 
 const files = import.meta.glob<Engine>("../../../engines/*.json", { eager: true, import: "default" });
 

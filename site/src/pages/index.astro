@@ -4,6 +4,7 @@ import Base from "~/layouts/Base.astro";
 import GameCard from "~/components/GameCard.astro";
 import icon from "~/assets/shiori.png";
 import {
+  appPage,
   counts,
   engineRepos,
   engines,
@@ -41,6 +42,10 @@ const steps = [
           <p class="mt-4 max-w-2xl text-lg text-pretty text-muted">
             Steam visual novels tested on iPhone, iPad and Apple TV, each running on a native runtime for its engine.
           </p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href={appPage} class="btn btn-primary">Get Shiori</a>
+            <a href={reportURL()} class="btn btn-secondary">Report a game</a>
+          </div>
         </div>
       </div>
 

@@ -1,7 +1,7 @@
 ---
 import "~/styles/global.css";
 import ThemeToggle from "~/components/ThemeToggle.astro";
-import { repo } from "~/lib/games";
+import { appPage, repo } from "~/lib/games";
 
 interface Props {
   title?: string;
@@ -17,7 +17,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const year = new Date().getFullYear();
 const footerLinks = [
-  { href: "https://ocramer.com/apps/shiori", label: "Shiori" },
+  { href: appPage, label: "Shiori" },
   { href: "https://github.com/OWCramer/shiori-patches", label: "Patches" },
   { href: repo, label: "GitHub" },
   { href: "https://ocramer.com", label: "ocramer.com" },
@@ -74,12 +74,12 @@ const footerLinks = [
             <circle cx="29" cy="33" r="13" fill="none" stroke="#fff" stroke-width="7"></circle>
             <circle cx="48" cy="44" r="5" fill="#c8372d"></circle>
           </svg>
-          <span>Shiori <span class="text-muted">Compatibility</span></span>
+          <span>Shiori <span class="hidden text-muted sm:inline">Compatibility</span></span>
         </a>
         <div class="flex min-w-0 items-center gap-0.5 sm:gap-2">
           <a href="#games" class="hidden rounded-full px-3 py-1.5 text-sm font-medium text-muted transition hover:text-fg sm:inline">Games</a>
           <a href="#engines" class="hidden rounded-full px-3 py-1.5 text-sm font-medium text-muted transition hover:text-fg sm:inline">Engines</a>
-          <a href="#report" class="rounded-full px-2.5 py-1.5 text-sm font-medium whitespace-nowrap text-muted transition hover:text-fg sm:px-3">Report</a>
+          <a href="#report" class="hidden rounded-full px-3 py-1.5 text-sm font-medium text-muted transition hover:text-fg sm:inline">Report</a>
           <a href={repo} class="inline-flex rounded-full p-2 text-muted transition hover:text-fg" aria-label="GitHub">
             <svg viewBox="0 0 24 24" class="size-5" fill="currentColor" aria-hidden="true"
               ><path
@@ -88,6 +88,7 @@ const footerLinks = [
             >
           </a>
           <ThemeToggle />
+          <a href={appPage} class="btn btn-primary ml-1 px-3.5 py-1.5 whitespace-nowrap">Get Shiori</a>
         </div>
       </nav>
     </header>
