@@ -1,0 +1,114 @@
+---
+import "~/styles/global.css";
+import ThemeToggle from "~/components/ThemeToggle.astro";
+import { repo } from "~/lib/games";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Shiori Compatibility",
+  description = "Which Steam visual novels play in Shiori, the iPhone, iPad and Apple TV app that runs the PC games you own.",
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const year = new Date().getFullYear();
+const footerLinks = [
+  { href: "https://ocramer.com/apps/shiori", label: "Shiori" },
+  { href: "https://github.com/OWCramer/shiori-patches", label: "Patches" },
+  { href: repo, label: "GitHub" },
+  { href: "https://ocramer.com", label: "ocramer.com" },
+];
+---
+
+<!doctype html>
+<html lang="en" style="--accent: #c8372d">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Owen Cramer" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={`${base}/favicon.ico`} sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} />
+    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <script is:inline>
+      // Same theme handling as ocramer.com: "light", "dark" or "system" (no saved choice: follow the OS).
+      const systemDark = matchMedia("(prefers-color-scheme: dark)");
+      window.applyTheme = (mode) => {
+        if (!mode) {
+          try {
+            mode = localStorage.getItem("theme");
+          } catch {}
+        }
+        mode = mode === "light" || mode === "dark" ? mode : "system";
+        const root = document.documentElement;
+        root.dataset.themeMode = mode;
+        root.classList.toggle("dark", mode === "dark" || (mode === "system" && systemDark.matches));
+      };
+      applyTheme();
+      systemDark.addEventListener("change", () => applyTheme());
+    </script>
+  </head>
+  <body class="flex flex-col">
+    <a
+      href="#main"
+      class="sr-only rounded-full bg-fg px-4 py-2 text-bg focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50"
+      >Skip to content</a
+    >
+    <header class="sticky top-0 z-40 border-b border-line bg-bg/75 backdrop-blur-xl backdrop-saturate-150">
+      <nav class="container-page flex h-16 items-center justify-between gap-3" aria-label="Main">
+        <a href={`${base}/`} class="flex shrink-0 items-center gap-2.5 text-[0.95rem] font-semibold tracking-tight whitespace-nowrap">
+          <svg viewBox="0 0 64 64" class="size-7 rounded-[22%] ring-1 ring-line" aria-hidden="true">
+            <rect width="64" height="64" rx="14" fill="#18181b"></rect>
+            <circle cx="29" cy="33" r="13" fill="none" stroke="#fff" stroke-width="7"></circle>
+            <circle cx="48" cy="44" r="5" fill="#c8372d"></circle>
+          </svg>
+          <span>Shiori <span class="text-muted">Compatibility</span></span>
+        </a>
+        <div class="flex min-w-0 items-center gap-0.5 sm:gap-2">
+          <a href="#games" class="hidden rounded-full px-3 py-1.5 text-sm font-medium text-muted transition hover:text-fg sm:inline">Games</a>
+          <a href="#engines" class="hidden rounded-full px-3 py-1.5 text-sm font-medium text-muted transition hover:text-fg sm:inline">Engines</a>
+          <a href="#report" class="rounded-full px-2.5 py-1.5 text-sm font-medium whitespace-nowrap text-muted transition hover:text-fg sm:px-3">Report</a>
+          <a href={repo} class="inline-flex rounded-full p-2 text-muted transition hover:text-fg" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" class="size-5" fill="currentColor" aria-hidden="true"
+              ><path
+                d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.39-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"
+              ></path></svg
+            >
+          </a>
+          <ThemeToggle />
+        </div>
+      </nav>
+    </header>
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+    <footer class="mt-24 border-t border-line">
+      <div class="container-page flex flex-col gap-4 py-10 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+        <p>© {year} Owen Cramer · List under CC0 1.0</p>
+        <ul class="flex flex-wrap gap-x-5 gap-y-2">
+          {
+            footerLinks.map(({ href, label }) => (
+              <li>
+                <a href={href} class="transition hover:text-fg">
+                  {label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </footer>
+  </body>
+</html>

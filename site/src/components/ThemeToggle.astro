@@ -1,0 +1,59 @@
+<button
+  type="button"
+  data-theme-toggle
+  class="rounded-full p-2 text-muted transition hover:text-fg"
+  aria-label="Theme: system"
+  title="Theme: system"
+>
+  {/* One icon per mode; the inline script in Base sets data-theme-mode on <html>. */}
+  <svg viewBox="0 0 24 24" class="theme-icon size-5" data-mode="system" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"
+    ><rect x="3" y="4" width="18" height="12" rx="2"></rect><path stroke-linecap="round" d="M8 20h8M12 16v4"></path></svg
+  >
+  <svg viewBox="0 0 24 24" class="theme-icon size-5" data-mode="light" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"
+    ><circle cx="12" cy="12" r="4"></circle><path
+      stroke-linecap="round"
+      d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg
+  >
+  <svg viewBox="0 0 24 24" class="theme-icon size-5" data-mode="dark" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"
+    ><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg
+  >
+</button>
+
+<style>
+  .theme-icon {
+    display: none;
+  }
+  :global(html[data-theme-mode="system"]) .theme-icon[data-mode="system"],
+  :global(html[data-theme-mode="light"]) .theme-icon[data-mode="light"],
+  :global(html[data-theme-mode="dark"]) .theme-icon[data-mode="dark"] {
+    display: block;
+  }
+</style>
+
+<script>
+  const order = ["system", "light", "dark"] as const;
+  type Mode = (typeof order)[number];
+
+  function syncLabel() {
+    const mode = document.documentElement.dataset.themeMode ?? "system";
+    for (const button of document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]")) {
+      button.setAttribute("aria-label", `Theme: ${mode}`);
+      button.title = `Theme: ${mode}`;
+    }
+  }
+
+  // Cycles system → light → dark → system. "System" clears the saved choice.
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element) || !event.target.closest("[data-theme-toggle]")) return;
+    const current = (document.documentElement.dataset.themeMode ?? "system") as Mode;
+    const next = order[(order.indexOf(current) + 1) % order.length];
+    try {
+      if (next === "system") localStorage.removeItem("theme");
+      else localStorage.setItem("theme", next);
+    } catch {}
+    window.applyTheme(next);
+    syncLabel();
+  });
+
+  syncLabel();
+</script>

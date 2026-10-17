@@ -1,0 +1,75 @@
+---
+import StatusPill from "./StatusPill.astro";
+import { formatDate, steamHeader, steamStore, type Entry } from "~/lib/games";
+
+interface Props {
+  game: Entry;
+}
+
+const { game } = Astro.props;
+const reporter = game.source && game.source !== "shiori" ? game.source : undefined;
+---
+
+<article
+  data-game
+  data-status={game.status}
+  data-engine={game.engine}
+  data-search={`${game.name} ${game.engineName} ${game.notes ?? ""}`.toLowerCase()}
+  class="reveal group relative flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-surface transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_-30px_var(--accent)]"
+>
+  <div class="relative aspect-[460/215] overflow-hidden bg-surface-2">
+    {/* Steam's capsule art; the gradient behind it shows if the image is missing. */}
+    <div class="absolute inset-0 bg-[radial-gradient(120%_120%_at_0%_0%,color-mix(in_oklab,var(--accent)_22%,transparent),transparent_60%)]"></div>
+    <img
+      src={steamHeader(game.appID)}
+      alt=""
+      width="460"
+      height="215"
+      loading="lazy"
+      decoding="async"
+      class="relative size-full object-cover transition duration-500 group-hover:scale-[1.03]"
+      onerror="this.remove()"
+    />
+    <div class="absolute top-3 left-3">
+      <StatusPill status={game.status} />
+    </div>
+  </div>
+
+  <div class="flex flex-1 flex-col p-5">
+    <p class="text-xs font-semibold tracking-wide uppercase" style="color: var(--accent)">{game.engineName}</p>
+    <h3 class="mt-1.5 text-lg leading-snug font-semibold tracking-tight text-balance">
+      {/* The link's ::after covers the whole card, so the card is one big click target. */}
+      <a
+        href={steamStore(game.appID)}
+        class="outline-none after:absolute after:inset-0 after:z-[1] after:rounded-3xl after:content-[''] focus-visible:after:outline-2 focus-visible:after:outline-offset-2 focus-visible:after:outline-[var(--accent)]"
+      >
+        {game.name}
+      </a>
+    </h3>
+    {game.notes && <p class="mt-2 text-sm leading-relaxed text-pretty text-muted">{game.notes}</p>}
+
+    {
+      (game.branch || game.profile) && (
+        <div class="mt-3 flex flex-wrap gap-1.5">
+          {game.branch && (
+            <span class="rounded-full bg-surface-2 px-2.5 py-1 text-xs font-medium text-fg">
+              Beta branch <span class="font-mono">{game.branch}</span>
+            </span>
+          )}
+          {game.profile && (
+            <span class="rounded-full bg-surface-2 px-2.5 py-1 text-xs font-medium text-fg">
+              Profile <span class="font-mono">{game.profile}</span>
+            </span>
+          )}
+        </div>
+      )
+    }
+
+    <div class="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pt-4 text-xs text-muted">
+      {game.tested && <time datetime={game.tested}>Tested {formatDate(game.tested)}</time>}
+      {game.devices?.length ? <span>{game.devices.join(", ")}</span> : null}
+      {reporter && <span>by @{reporter}</span>}
+      <span class="ml-auto font-mono">{game.appID}</span>
+    </div>
+  </div>
+</article>

@@ -2,7 +2,7 @@
 
 Which Steam visual novels play in Shiori, the iOS and iPadOS app that downloads the PC games you own and runs them with native engine runtimes.
 
-One file per engine in `engines/`, one entry per game, keyed by its Steam app id. Shiori reads these files to show a game's status on its page.
+One file per engine in `engines/`, one entry per game, keyed by its Steam app id. Shiori reads these files to show a game's status on its page, and [the site](https://compat.ocramer.com) is built from them.
 
 | Status | Meaning |
 | --- | --- |

@@ -1,0 +1,172 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+}
+
+:root {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-2: #f4f4f5;
+  --fg: #18181b;
+  --muted: #52525b;
+  --line: rgb(24 24 27 / 0.09);
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #09090b;
+  --surface: #131316;
+  --surface-2: #1c1c20;
+  --fg: #fafafa;
+  --muted: #a1a1aa;
+  --line: rgb(255 255 255 / 0.09);
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    @apply bg-bg text-fg antialiased;
+    font-feature-settings: "cv11", "ss01";
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply min-h-dvh bg-bg font-sans;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--accent, #6366f1) 30%, transparent);
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent, #6366f1);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* iOS-style squircle approximation for app icons. */
+  .app-icon {
+    border-radius: 22.37%;
+    box-shadow:
+      0 0 0 1px var(--line),
+      0 8px 24px -12px rgb(0 0 0 / 0.35);
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition
+      active:scale-[0.97];
+  }
+  .btn-primary {
+    background: var(--accent, var(--fg));
+    color: white;
+  }
+  .btn-primary:hover {
+    filter: brightness(1.08);
+  }
+  .btn-secondary {
+    @apply bg-surface-2 text-fg ring-1 ring-line hover:bg-surface;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold tracking-[0.14em] text-muted uppercase;
+  }
+
+  /* Long-form text: app bodies, policies, support pages. */
+  .prose {
+    @apply max-w-none text-[1.0625rem] leading-relaxed text-muted;
+  }
+  .prose > * + * {
+    @apply mt-4;
+  }
+  .prose :is(h2) {
+    @apply mt-12 text-2xl font-semibold tracking-tight text-fg;
+  }
+  .prose :is(h3) {
+    @apply mt-8 text-lg font-semibold text-fg;
+  }
+  .prose :is(h4) {
+    @apply mt-6 font-semibold text-fg;
+  }
+  .prose :is(strong) {
+    @apply font-semibold text-fg;
+  }
+  .prose a {
+    color: var(--accent, var(--fg));
+    @apply font-medium underline decoration-1 underline-offset-[3px] hover:decoration-2;
+  }
+  .prose :is(ul, ol) {
+    @apply space-y-2 pl-6;
+  }
+  .prose ul {
+    @apply list-disc;
+  }
+  .prose ol {
+    @apply list-decimal;
+  }
+  .prose li::marker {
+    color: var(--accent, var(--muted));
+  }
+  .prose code {
+    @apply rounded bg-surface-2 px-1.5 py-0.5 text-[0.9em] text-fg;
+  }
+  .prose table {
+    @apply w-full border-collapse text-left text-sm;
+  }
+  .prose .table {
+    @apply overflow-x-auto;
+  }
+  .prose th {
+    @apply border-b border-line py-2 pr-4 font-semibold text-fg;
+  }
+  .prose td {
+    @apply border-b border-line py-2.5 pr-4 align-top;
+  }
+  .prose .lede {
+    @apply text-lg text-fg;
+  }
+  .prose .short {
+    @apply rounded-2xl bg-surface-2 p-5 text-fg;
+  }
+}
+
+/* Scroll-driven reveal, only where supported and wanted. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
+}
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
