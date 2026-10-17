@@ -1,0 +1,75 @@
+name: Report a game
+description: Tell us how a game plays in Shiori.
+title: "Report: "
+labels: [report]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Game
+      description: The name on its Steam store page.
+      placeholder: Harmonia Full HD Edition
+    validations:
+      required: true
+  - type: input
+    id: appid
+    attributes:
+      label: Steam app id
+      description: The number in the game's store link, or the link itself.
+      placeholder: "2699690"
+    validations:
+      required: true
+  - type: dropdown
+    id: engine
+    attributes:
+      label: Engine
+      description: The game's page in Shiori shows it after the download.
+      options:
+        - Ren'Py
+        - KiriKiri
+        - Artemis
+        - SiglusEngine
+        - Luca System
+        - CatSystem2
+        - ONScripter
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: Status
+      options:
+        - Complete — everything the PC version has works
+        - Plays — playable start to end, maybe missing extras
+        - Boots — reaches its title or first scene
+        - Unsupported — doesn't start
+    validations:
+      required: true
+  - type: input
+    id: devices
+    attributes:
+      label: Devices
+      description: Separate them with commas.
+      placeholder: iPhone Air, iPad Pro 11-inch (M4)
+    validations:
+      required: true
+  - type: input
+    id: branch
+    attributes:
+      label: Steam beta branch
+      description: Only if you played a beta branch instead of the default build.
+      placeholder: renpy_old
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: What works, what doesn't, and anything a player should know. Keep it short.
+    validations:
+      required: true
+  - type: checkboxes
+    id: license
+    attributes:
+      label: Licence
+      options:
+        - label: I dedicate this report to the public domain under CC0 1.0.
+          required: true

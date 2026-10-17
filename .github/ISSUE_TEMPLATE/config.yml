@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Compatibility list
+    url: https://compat.ocramer.com
+    about: Check whether a game has already been tested.

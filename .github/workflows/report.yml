@@ -1,0 +1,72 @@
+name: Report
+# Labelling a "Report a game" issue "accepted" opens a pull request that writes it into its engine's file.
+on:
+  issues:
+    types: [labeled]
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+jobs:
+  pull-request:
+    if: github.event.label.name == 'accepted' && contains(github.event.issue.labels.*.name, 'report')
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      NUMBER: ${{ github.event.issue.number }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install jsonschema==4.23.0
+      - name: Write the entry
+        id: entry
+        env:
+          # Untrusted text goes through the environment, never into the script itself.
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          ISSUE_CREATED: ${{ github.event.issue.created_at }}
+        run: |
+          export ISSUE_DATE="${ISSUE_CREATED:0:10}"
+          if ! summary=$(python .github/scripts/report_to_entry.py 2>error.txt); then
+            gh issue comment "$NUMBER" --body "Couldn't turn this report into an entry: $(cat error.txt)"
+            exit 1
+          fi
+          echo "summary=$summary" >> "$GITHUB_OUTPUT"
+      - name: Check every engine file against schema.json, with unique app ids
+        run: |
+          python - <<'PY'
+          import glob, json, sys
+          from jsonschema import validate
+          schema = json.load(open("schema.json"))
+          seen, failed = {}, False
+          for path in sorted(glob.glob("engines/*.json")):
+              data = json.load(open(path))
+              validate(data, schema)
+              for game in data["games"]:
+                  if game["appID"] in seen:
+                      print(f"{path}: {game['appID']} is also in {seen[game['appID']]}"); failed = True
+                  seen[game["appID"]] = path
+          sys.exit(1 if failed else 0)
+          PY
+      - name: Open the pull request
+        env:
+          SUMMARY: ${{ steps.entry.outputs.summary }}
+        run: |
+          if [ -z "$(git status --porcelain engines)" ]; then
+            gh issue comment "$NUMBER" --body "This report doesn't change the list."
+            exit 0
+          fi
+          branch="report-$NUMBER"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898099+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git add engines
+          git commit -m "$SUMMARY" -m "From #$NUMBER."
+          git push --force origin "$branch"
+          gh pr create --head "$branch" --title "${SUMMARY%.}" --body "$SUMMARY
+
+          Closes #$NUMBER." || gh pr edit "$branch" --body "$SUMMARY
+
+          Closes #$NUMBER."

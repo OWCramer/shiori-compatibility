@@ -11,21 +11,18 @@ import {
   formatDate,
   lastTested,
   repo,
+  reportURL,
   shortName,
   statusInfo,
   statuses,
 } from "~/lib/games";
 
 const playable = counts.complete + counts.plays;
-const example = `{
-  "appID": 2699690,
-  "name": "Harmonia Full HD Edition",
-  "status": "plays",
-  "tested": "2026-10-10",
-  "source": "your-github-name",
-  "devices": ["iPhone Air"],
-  "notes": "What works, what doesn't, and anything a player should know."
-}`;
+const steps = [
+  { title: "Fill in the form", body: "The game, its Steam app id, engine, status and the devices you played on." },
+  { title: "We check it", body: "A maintainer reviews the report and accepts it." },
+  { title: "It's on the list", body: "Accepted reports become an entry here and on the game's page in Shiori." },
+];
 ---
 
 <Base>
@@ -104,7 +101,7 @@ const example = `{
       {entries.map((game) => <GameCard game={game} />)}
     </div>
     <p data-empty hidden class="mt-6 rounded-3xl border border-dashed border-line p-10 text-center text-muted">
-      No games match. <a href="#report" class="font-medium text-fg underline underline-offset-[3px]">Report one</a>
+      No games match. <a href={reportURL()} class="font-medium text-fg underline underline-offset-[3px]">Report one</a>
     </p>
   </section>
 
@@ -160,35 +157,31 @@ const example = `{
   </section>
 
   <section id="report" class="container-page mt-24 scroll-mt-20" aria-labelledby="report-title">
-    <div class="grid gap-8 rounded-3xl border border-line bg-surface p-6 sm:p-10 lg:grid-cols-2">
-      <div>
-        <h2 id="report-title" class="text-3xl font-semibold tracking-tight">Report a game</h2>
-        <p class="mt-3 text-muted">
-          Open a pull request that adds or changes the game's entry in its engine's file in <code
-            class="rounded bg-surface-2 px-1.5 py-0.5 text-[0.9em] text-fg">engines/</code
-          >. Shiori's game page shows the engine after the download.
-        </p>
-        <ul class="mt-5 space-y-2 text-sm text-muted">
-          <li class="flex gap-2.5">
-            <span class="mt-2 size-1 shrink-0 rounded-full" style="background: var(--accent)" aria-hidden="true"></span>
-            <span><code class="text-fg">source</code> is your GitHub name.</span>
-          </li>
-          <li class="flex gap-2.5">
-            <span class="mt-2 size-1 shrink-0 rounded-full" style="background: var(--accent)" aria-hidden="true"></span>
-            <span><code class="text-fg">branch</code> names a Steam beta branch to play instead of the default build.</span>
-          </li>
-          <li class="flex gap-2.5">
-            <span class="mt-2 size-1 shrink-0 rounded-full" style="background: var(--accent)" aria-hidden="true"></span>
-            <span>Keep entries sorted and notes short. By contributing you dedicate them to the public domain (CC0 1.0).</span>
-          </li>
-        </ul>
-        <div class="mt-7 flex flex-wrap gap-3">
-          <a href={`${repo}/tree/main/engines`} class="btn btn-primary">Open the engine files</a>
-          <a href={repo} class="btn btn-secondary">View on GitHub</a>
+    <div class="rounded-3xl border border-line bg-surface p-6 sm:p-10">
+      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <h2 id="report-title" class="text-3xl font-semibold tracking-tight">Report a game</h2>
+          <p class="mt-3 max-w-xl text-muted">Played something that isn't listed, or plays better than it says? Tell us on GitHub.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href={reportURL()} class="btn btn-primary">Report a game</a>
+          <a href={`${repo}/tree/main/engines`} class="btn btn-secondary">Edit the files</a>
         </div>
       </div>
-      <pre
-        class="overflow-x-auto rounded-2xl bg-surface-2 p-5 font-mono text-[0.8125rem] leading-relaxed text-fg ring-1 ring-line"><code>{example}</code></pre>
+      <ol class="mt-10 grid gap-6 sm:grid-cols-3">
+        {
+          steps.map((step, i) => (
+            <li>
+              <span class="flex size-8 items-center justify-center rounded-full text-sm font-semibold text-white" style="background: var(--accent)">
+                {i + 1}
+              </span>
+              <h3 class="mt-3 font-semibold">{step.title}</h3>
+              <p class="mt-1 text-sm text-muted">{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="mt-10 text-sm text-muted">Reports are dedicated to the public domain under CC0 1.0.</p>
     </div>
   </section>
 </Base>

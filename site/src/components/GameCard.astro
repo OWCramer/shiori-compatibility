@@ -1,6 +1,6 @@
 ---
 import StatusPill from "./StatusPill.astro";
-import { formatDate, steamHeader, steamStore, type Entry } from "~/lib/games";
+import { formatDate, reportURL, steamHeader, steamStore, type Entry } from "~/lib/games";
 
 interface Props {
   game: Entry;
@@ -69,7 +69,8 @@ const reporter = game.source && game.source !== "shiori" ? game.source : undefin
       {game.tested && <time datetime={game.tested}>Tested {formatDate(game.tested)}</time>}
       {game.devices?.length ? <span>{game.devices.join(", ")}</span> : null}
       {reporter && <span>by @{reporter}</span>}
-      <span class="ml-auto font-mono">{game.appID}</span>
+      {/* Sits above the card-wide Steam link. */}
+      <a href={reportURL(game)} class="relative z-[2] ml-auto font-medium text-fg hover:underline">Update</a>
     </div>
   </div>
 </article>

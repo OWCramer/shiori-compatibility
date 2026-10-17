@@ -13,7 +13,11 @@ One file per engine in `engines/`, one entry per game, keyed by its Steam app id
 
 ## Reporting a game
 
-Open a pull request that adds or changes an entry in the engine's file:
+[Report a game](https://github.com/OWCramer/shiori-compatibility/issues/new?template=report.yml) with the issue form: the game, its Steam app id, engine, status, the devices you played on and a short note. Once a maintainer labels the report `accepted`, an Action opens a pull request that writes it into the engine's file, with your GitHub name as its `source`.
+
+Not sure which engine a game uses? Shiori's game page shows it after the download.
+
+You can also open a pull request yourself. Each entry looks like this:
 
 ```json
 {
@@ -32,6 +36,8 @@ Open a pull request that adds or changes an entry in the engine's file:
 - `profile` (Luca System) is the screen profile Shiori uses for the game.
 - `schema.json` checks the files; keep entries sorted as they are and the notes short.
 
-Not sure which engine a game uses? Shiori's game page shows it after the download.
+## Site
+
+[compat.ocramer.com](https://compat.ocramer.com) is built from `engines/` by the Astro site in `site/` and deployed on Vercel.
 
 The list is dedicated to the public domain under [CC0 1.0](LICENSE): by contributing you agree to the same.

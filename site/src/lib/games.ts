@@ -79,3 +79,15 @@ export const steamHeader = (id: number) => `https://shared.akamai.steamstatic.co
 
 export const formatDate = (iso: string) =>
   new Date(`${iso}T12:00:00Z`).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+
+/** The "Report a game" issue form, pre-filled for a listed game when one is given. */
+export function reportURL(game?: Entry) {
+  const url = new URL(`${repo}/issues/new`);
+  url.searchParams.set("template", "report.yml");
+  if (game) {
+    url.searchParams.set("title", `Report: ${game.name}`);
+    url.searchParams.set("name", game.name);
+    url.searchParams.set("appid", String(game.appID));
+  }
+  return url.href;
+}
