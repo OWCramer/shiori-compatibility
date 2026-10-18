@@ -43,20 +43,13 @@
       "notes": "Text starts in Japanese; switch it in the game's Config."
     },
     {
-      "appID": 602520,
-      "name": "NEKOPARA Vol. 3",
-      "status": "unsupported",
-      "source": "shiori",
-      "notes": "CatSystem2, which Shiori doesn't run yet."
-    },
-    {
       "appID": 487430,
       "name": "KARAKARA",
       "garbro": "KARAKARA 2",
       "status": "boots",
-      "tested": "2026-10-08",
+      "tested": "2026-10-14",
       "source": "shiori",
-      "notes": "CxDec scheme from GARbro (shared with KARAKARA 2); boots to its title on the Mac harness."
+      "notes": "CxDec scheme from GARbro (shared with KARAKARA 2). Reaches its title, and the opening sky pans smoothly on device."
     },
     {
       "appID": 745850,
@@ -122,10 +115,28 @@
       "appID": 1829980,
       "name": "Café Stella and the Reaper's Butterflies",
       "garbro": "Café Stella to Shinigami no Chou [Steam]",
-      "status": "boots",
-      "tested": "2026-10-13",
+      "status": "plays",
+      "tested": "2026-10-14",
       "source": "shiori",
-      "notes": "Hx encryption, keys from GARbro. Reaches its title and the first scene with text and voices on Shiori (Beta). The title's animated background and the first scene's butterfly movie don't show yet."
+      "notes": "Hx encryption, keys from GARbro. The animated title and butterflies, voices, choices after a skip, and the game's config."
+    },
+    {
+      "appID": 1277930,
+      "name": "Riddle Joker",
+      "garbro": "Riddle Joker [Steam]",
+      "status": "plays",
+      "tested": "2026-10-14",
+      "source": "shiori",
+      "notes": "Title and opening movie, phone and radio voice effects, settings and per-character voice volumes, saves, backlog; an all-ages route from chapter 1's choice to chapter 5."
+    },
+    {
+      "appID": 1230140,
+      "name": "ATRI -My Dear Moments-",
+      "garbro": "ATRI -My Dear Moments-",
+      "status": "boots",
+      "tested": "2026-10-14",
+      "source": "shiori",
+      "notes": "The underwater opening plays smoothly on iPhone and iPad."
     },
     {
       "appID": 1144400,

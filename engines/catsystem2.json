@@ -1,0 +1,14 @@
+{
+  "engine": "catsystem2",
+  "name": "CatSystem2 (CatSystemKit)",
+  "games": [
+    {
+      "appID": 602520,
+      "name": "NEKOPARA Vol. 3",
+      "status": "plays",
+      "tested": "2026-10-14",
+      "source": "shiori",
+      "notes": "FES title, the game's own menus, CONFIG and backlog, E-mote characters, voices and movies. Saves made in the game load after relaunch."
+    }
+  ]
+}
