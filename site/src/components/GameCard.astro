@@ -7,7 +7,17 @@ interface Props {
 }
 
 const { game } = Astro.props;
-const reporter = game.source && game.source !== "shiori" ? game.source : undefined;
+const reporter = game.source && !["shiori", "players"].includes(game.source) ? game.source : undefined;
+// "12 players · 34 h · 92% play well"
+const players = game.players && game.players.count > 0 ? game.players : undefined;
+const rated = players ? (players.works ?? 0) + (players.issues ?? 0) + (players.broken ?? 0) : 0;
+const playersLine = players
+  ? [
+      `${players.count} player${players.count === 1 ? "" : "s"}`,
+      `${players.hours >= 10 ? Math.round(players.hours) : players.hours} h`,
+      rated > 0 ? `${Math.round(((players.works ?? 0) / rated) * 100)}% play well` : undefined,
+    ].filter(Boolean).join(" · ")
+  : undefined;
 ---
 
 <article
@@ -47,6 +57,7 @@ const reporter = game.source && game.source !== "shiori" ? game.source : undefin
       </a>
     </h3>
     {game.notes && <p class="mt-2 text-sm leading-relaxed text-pretty text-muted">{game.notes}</p>}
+    {playersLine && <p class="mt-2 text-sm font-medium text-fg">{playersLine}</p>}
 
     {
       (game.branch || game.profile) && (

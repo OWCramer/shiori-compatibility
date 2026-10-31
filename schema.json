@@ -58,7 +58,7 @@
           },
           "source": {
             "type": "string",
-            "description": "shiori for the maintainers' own tests, else the reporter's GitHub name"
+            "description": "shiori for the maintainers' own tests, players when set from in-app reports, else the reporter's GitHub name"
           },
           "devices": {
             "type": "array",
@@ -80,6 +80,37 @@
           },
           "notes": {
             "type": "string"
+          },
+          "players": {
+            "type": "object",
+            "description": "totals from players who share compatibility data from the app (updated daily)",
+            "additionalProperties": false,
+            "required": [
+              "count",
+              "hours"
+            ],
+            "properties": {
+              "count": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "hours": {
+                "type": "number",
+                "minimum": 0
+              },
+              "works": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "issues": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "broken": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
           }
         }
       }

@@ -13,6 +13,8 @@ export interface Game {
   garbro?: string;
   profile?: string;
   notes?: string;
+  /** Totals from players who share compatibility data from the app. */
+  players?: { count: number; hours: number; works?: number; issues?: number; broken?: number };
 }
 
 export interface Engine {
