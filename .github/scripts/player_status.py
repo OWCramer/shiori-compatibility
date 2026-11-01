@@ -8,6 +8,8 @@ majority says it works.
 import datetime, json, os, sys, urllib.request
 
 STATS = os.environ.get("STATS_URL", "https://compat.ocramer.com/api/stats")
+# Cloudflare in front of compat.ocramer.com refuses urllib's default user agent.
+HEADERS = {"User-Agent": "shiori-compatibility (+https://github.com/OWCramer/shiori-compatibility)"}
 THRESHOLD = 3
 STATUS = {"works": "plays", "issues": "boots", "broken": "unsupported"}
 ORDER = ["broken", "issues", "works"]  # worst first: ties go to the worse
@@ -17,7 +19,7 @@ def majority(ratings):
     return next(r for r in ORDER if ratings.get(r, 0) == best)
 
 def main():
-    with urllib.request.urlopen(STATS, timeout=30) as response:
+    with urllib.request.urlopen(urllib.request.Request(STATS, headers=HEADERS), timeout=30) as response:
         stats = json.load(response)["games"]
     today = datetime.date.today().isoformat()
     files = {}
