@@ -136,7 +136,14 @@
       "status": "boots",
       "tested": "2026-10-14",
       "source": "shiori",
-      "notes": "The underwater opening plays smoothly on iPhone and iPad."
+      "notes": "The underwater opening plays smoothly on iPhone and iPad.",
+      "players": {
+        "count": 1,
+        "hours": 0,
+        "broken": 0,
+        "issues": 0,
+        "works": 0
+      }
     },
     {
       "appID": 1144400,
